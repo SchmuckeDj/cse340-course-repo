@@ -11,4 +11,83 @@ const getAllProjects = async () => {
     }
 };
 
-export { getAllProjects };
+const getProjectsByOrganizationId = async (organizationId) => {
+    try {
+        const query = `
+            SELECT
+                project_id,
+                organization_id,
+                title,
+                description,
+                location,
+                date
+            FROM project
+            WHERE organization_id = $1
+            ORDER BY date;
+        `;
+
+        const queryParams = [organizationId];
+        const result = await db.query(query, queryParams);
+
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getProjectsByOrganizationId:', error.message);
+        throw error;
+    }
+};
+
+const getUpcomingProjects = async (numberOfProjects) => {
+    try {
+        const query = `
+            SELECT
+                project.project_id,
+                project.title,
+                project.description,
+                project.date,
+                project.location,
+                project.organization_id,
+                organization.name AS organization_name
+            FROM project
+            JOIN organization ON project.organization_id = organization.organization_id
+            WHERE project.date >= CURRENT_DATE
+            ORDER BY project.date ASC
+            LIMIT $1;
+        `;
+
+        const queryParams = [numberOfProjects];
+        const result = await db.query(query, queryParams);
+
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getUpcomingProjects:', error.message);
+        throw error;
+    }
+};
+
+const getProjectDetails = async (projectId) => {
+    try {
+        const query = `
+            SELECT
+                project.project_id,
+                project.title,
+                project.description,
+                project.date,
+                project.location,
+                project.organization_id,
+                organization.name AS organization_name
+            FROM project
+            JOIN organization ON project.organization_id = organization.organization_id
+            WHERE project.project_id = $1;
+        `;
+
+        const queryParams = [projectId];
+        const result = await db.query(query, queryParams);
+
+        return result.rows.length > 0 ? result.rows[0] : null;
+    } catch (error) {
+        console.error('Error in getProjectDetails:', error.message);
+        throw error;
+    }
+};
+
+export { getAllProjects, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails };

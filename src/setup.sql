@@ -20,18 +20,21 @@ VALUES
 -- ========================================
 CREATE TABLE project (
     project_id SERIAL PRIMARY KEY,
-    name VARCHAR(150) NOT NULL,
-    description TEXT NOT NULL
+    organization_id INTEGER NOT NULL REFERENCES organization(organization_id) ON DELETE CASCADE,
+    title VARCHAR(150) NOT NULL,
+    description TEXT NOT NULL,
+    location VARCHAR(255),
+    date DATE
 );
 
 -- ========================================
 -- Insert sample data: Projects
 -- ========================================
-INSERT INTO project (name, description)
+INSERT INTO project (organization_id, title, description, location, date)
 VALUES
-('Park Cleanup', 'Join us to clean up local parks and make them beautiful!'),
-('Food Drive', 'Help collect and distribute food to those in need.'),
-('Community Tutoring', 'Volunteer to tutor students in various subjects.');
+((SELECT organization_id FROM organization WHERE name = 'BrightFuture Builders'), 'Park Cleanup', 'Join us to clean up local parks and make them beautiful!', 'Central Park', '2026-04-12'),
+((SELECT organization_id FROM organization WHERE name = 'GreenHarvest Growers'), 'Food Drive', 'Help collect and distribute food to those in need.', 'Community Center', '2026-05-03'),
+((SELECT organization_id FROM organization WHERE name = 'UnityServe Volunteers'), 'Community Tutoring', 'Volunteer to tutor students in various subjects.', 'Public Library', '2026-05-20');
 
 -- ========================================
 -- Table: category
@@ -65,7 +68,7 @@ CREATE TABLE project_category (
 -- ========================================
 INSERT INTO project_category (project_id, category_id)
 VALUES
-((SELECT project_id FROM project WHERE name = 'Park Cleanup'), (SELECT category_id FROM category WHERE name = 'Environmental')),
-((SELECT project_id FROM project WHERE name = 'Food Drive'), (SELECT category_id FROM category WHERE name = 'Community Service')),
-((SELECT project_id FROM project WHERE name = 'Food Drive'), (SELECT category_id FROM category WHERE name = 'Health and Wellness')),
-((SELECT project_id FROM project WHERE name = 'Community Tutoring'), (SELECT category_id FROM category WHERE name = 'Educational'));
+((SELECT project_id FROM project WHERE title = 'Park Cleanup'), (SELECT category_id FROM category WHERE name = 'Environmental')),
+((SELECT project_id FROM project WHERE title = 'Food Drive'), (SELECT category_id FROM category WHERE name = 'Community Service')),
+((SELECT project_id FROM project WHERE title = 'Food Drive'), (SELECT category_id FROM category WHERE name = 'Health and Wellness')),
+((SELECT project_id FROM project WHERE title = 'Community Tutoring'), (SELECT category_id FROM category WHERE name = 'Educational'));

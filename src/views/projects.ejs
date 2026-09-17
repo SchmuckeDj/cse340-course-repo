@@ -4,10 +4,12 @@
             <%= title %>
         </h1>
 
-        <h2>Upcoming Service Projects</h2>
         <ul>
             <% projects.forEach((project) => { %>
-                <li><strong><%= project.name %></strong> - <%= project.description %></li>
+                <li>
+                    <strong><a href="/project/<%= project.project_id %>"><%= project.title %></a></strong>
+                    - <a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a>
+                </li>
             <% }); %>
         </ul>
     </main>

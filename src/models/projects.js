@@ -90,4 +90,26 @@ const getProjectDetails = async (projectId) => {
     }
 };
 
-export { getAllProjects, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails };
+const getCategoriesByProjectId = async (projectId) => {
+    try {
+        const query = `
+            SELECT
+                category.category_id,
+                category.name
+            FROM category
+            JOIN project_category ON category.category_id = project_category.category_id
+            WHERE project_category.project_id = $1
+            ORDER BY category.name;
+        `;
+
+        const queryParams = [projectId];
+        const result = await db.query(query, queryParams);
+
+        return result.rows;
+    } catch (error) {
+        console.error('Error in getCategoriesByProjectId:', error.message);
+        throw error;
+    }
+};
+
+export { getAllProjects, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails, getCategoriesByProjectId };

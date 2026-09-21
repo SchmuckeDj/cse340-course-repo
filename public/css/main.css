@@ -86,8 +86,7 @@ h1 {
   font-size: 2.1rem;
   font-weight: 800;
   letter-spacing: 0.03em;
-  color: var(--color-primary);
-  text-shadow: 0 0 18px rgba(0, 229, 255, 0.45);
+  color: #063a4a;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
 }
@@ -169,6 +168,12 @@ main li strong {
   font-size: 0.95rem;
   letter-spacing: 0.02em;
   color: var(--color-primary);
+}
+
+main li p {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  margin: 0.25rem 0 0;
 }
 
 main li a {

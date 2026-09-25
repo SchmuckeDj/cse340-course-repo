@@ -208,6 +208,16 @@ h2 {
   margin-top: 0;
 }
 
+h3 {
+  font-family: "Orbitron", sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  color: #0a1e33;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+}
+
 p {
   color: #2a3350;
   max-width: 65ch;

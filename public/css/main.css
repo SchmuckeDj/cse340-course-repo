@@ -85,27 +85,103 @@ nav a:focus-visible {
 }
 
 .alert.success {
-  color: #d1fae5;
-  background-color: rgba(16, 185, 129, 0.15);
+  color: #065f46;
+  background-color: #d1fae5;
   border-color: #10b981;
 }
 
 .alert.error {
-  color: #fecaca;
-  background-color: rgba(239, 68, 68, 0.15);
+  color: #7f1d1d;
+  background-color: #fee2e2;
   border-color: #ef4444;
 }
 
 .alert.warning {
-  color: #fde68a;
-  background-color: rgba(245, 158, 11, 0.15);
+  color: #78350f;
+  background-color: #fef3c7;
   border-color: #f59e0b;
 }
 
 .alert.info {
-  color: #bfdbfe;
-  background-color: rgba(59, 130, 246, 0.15);
+  color: #1e3a8a;
+  background-color: #dbeafe;
   border-color: #3b82f6;
+}
+
+/* ===== Forms ===== */
+form {
+  max-width: 500px;
+  margin-top: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  color: #1a2338;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid #c3cbe0;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #1a2338;
+  font-family: "Rajdhani", "Segoe UI", sans-serif;
+  font-size: 1rem;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--color-primary-dark);
+  outline-offset: 1px;
+  border-color: var(--color-primary-dark);
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+button[type="submit"] {
+  padding: 0.7rem 1.5rem;
+  background-color: var(--color-primary-dark);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0a8494;
+}
+
+/* Checkbox groups (e.g. assign categories) */
+.form-group div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input[type="checkbox"] {
+  width: auto;
 }
 
 /* ===== Main content ===== */

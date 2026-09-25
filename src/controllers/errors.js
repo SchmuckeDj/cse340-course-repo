@@ -9,5 +9,4 @@ const testErrorPage = (req, res, next) => {
     next(err);
 };
 
-// Export any controller functions
 export { testErrorPage };

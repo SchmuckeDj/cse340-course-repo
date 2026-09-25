@@ -74,6 +74,40 @@ nav a:focus-visible {
   outline: none;
 }
 
+/* ===== Flash messages ===== */
+.alert {
+  max-width: var(--max-width);
+  margin: 1rem auto 0;
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-weight: 500;
+}
+
+.alert.success {
+  color: #d1fae5;
+  background-color: rgba(16, 185, 129, 0.15);
+  border-color: #10b981;
+}
+
+.alert.error {
+  color: #fecaca;
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+}
+
+.alert.warning {
+  color: #fde68a;
+  background-color: rgba(245, 158, 11, 0.15);
+  border-color: #f59e0b;
+}
+
+.alert.info {
+  color: #bfdbfe;
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: #3b82f6;
+}
+
 /* ===== Main content ===== */
 main {
   max-width: var(--max-width);

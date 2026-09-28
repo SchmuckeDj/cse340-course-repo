@@ -1,4 +1,12 @@
 -- ========================================
+-- Reset: drop tables so this script can be re-run
+-- ========================================
+DROP TABLE IF EXISTS project_category CASCADE;
+DROP TABLE IF EXISTS project CASCADE;
+DROP TABLE IF EXISTS category CASCADE;
+DROP TABLE IF EXISTS organization CASCADE;
+
+-- ========================================
 -- Table: organization
 -- ========================================
 CREATE TABLE organization (
@@ -17,29 +25,31 @@ VALUES
 ('BrightFuture Builders', 'A nonprofit focused on improving community infrastructure through sustainable construction projects.', 'info@brightfuturebuilders.org', 'brightfuture-logo.png'),
 ('GreenHarvest Growers', 'An urban farming collective promoting food sustainability and education in local neighborhoods.', 'contact@greenharvest.org', 'greenharvest-logo.png'),
 ('UnityServe Volunteers', 'A volunteer coordination group supporting local charities and service initiatives.', 'hello@unityserve.org', 'unityserve-logo.png'),
-('Clean Rivers Alliance', 'An environmental group dedicated to restoring and protecting local waterways.', 'info@cleanrivers.org', 'cleanrivers-logo.png'),
-('Youth Literacy Network', 'A tutoring and mentorship organization focused on improving childhood literacy rates.', 'contact@youthliteracy.org', 'youthliteracy-logo.png'),
-('Helping Hands Shelter', 'A shelter and outreach program providing housing assistance to families in need.', 'info@helpinghands.org', 'helpinghands-logo.png'),
-('Animal Rescue Coalition', 'A network of volunteers who rescue, foster, and rehome abandoned animals.', 'contact@animalrescue.org', 'animalrescue-logo.png'),
-('Senior Companion Circle', 'A volunteer group offering companionship and support services to elderly community members.', 'hello@seniorcompanion.org', 'seniorcompanion-logo.png'),
-('Bike Safety Coalition', 'An organization promoting safe cycling infrastructure and bike education for students.', 'info@bikesafety.org', 'bikesafety-logo.png'),
-('Community Health Partners', 'A group of volunteers providing free health screenings and wellness education.', 'contact@communityhealth.org', 'communityhealth-logo.png'),
-('Habitat Restoration Crew', 'A conservation organization focused on restoring native habitats and wildlife corridors.', 'info@habitatrestoration.org', 'habitatrestoration-logo.png'),
-('Tech for Seniors', 'A volunteer initiative teaching older adults how to use technology safely and confidently.', 'contact@techforseniors.org', 'techforseniors-logo.png'),
-('Neighborhood Arts Collective', 'An arts organization bringing free creative workshops and murals to underserved neighborhoods.', 'hello@neighborhoodarts.org', 'neighborhoodarts-logo.png'),
-('Veterans Support Network', 'A nonprofit connecting volunteers with local veterans for mentorship and assistance programs.', 'info@veteranssupport.org', 'veteranssupport-logo.png'),
-('Clean Energy Advocates', 'An organization educating communities about renewable energy and sustainable living practices.', 'contact@cleanenergy.org', 'cleanenergy-logo.png');
+('Clean Rivers Alliance', 'An environmental group dedicated to restoring and protecting local waterways.', 'info@cleanrivers.org', 'placeholder-logo.png'),
+('Youth Literacy Network', 'A tutoring and mentorship organization focused on improving childhood literacy rates.', 'contact@youthliteracy.org', 'placeholder-logo.png'),
+('Helping Hands Shelter', 'A shelter and outreach program providing housing assistance to families in need.', 'info@helpinghands.org', 'placeholder-logo.png'),
+('Animal Rescue Coalition', 'A network of volunteers who rescue, foster, and rehome abandoned animals.', 'contact@animalrescue.org', 'placeholder-logo.png'),
+('Senior Companion Circle', 'A volunteer group offering companionship and support services to elderly community members.', 'hello@seniorcompanion.org', 'placeholder-logo.png'),
+('Bike Safety Coalition', 'An organization promoting safe cycling infrastructure and bike education for students.', 'info@bikesafety.org', 'placeholder-logo.png'),
+('Community Health Partners', 'A group of volunteers providing free health screenings and wellness education.', 'contact@communityhealth.org', 'placeholder-logo.png'),
+('Habitat Restoration Crew', 'A conservation organization focused on restoring native habitats and wildlife corridors.', 'info@habitatrestoration.org', 'placeholder-logo.png'),
+('Tech for Seniors', 'A volunteer initiative teaching older adults how to use technology safely and confidently.', 'contact@techforseniors.org', 'placeholder-logo.png'),
+('Neighborhood Arts Collective', 'An arts organization bringing free creative workshops and murals to underserved neighborhoods.', 'hello@neighborhoodarts.org', 'placeholder-logo.png'),
+('Veterans Support Network', 'A nonprofit connecting volunteers with local veterans for mentorship and assistance programs.', 'info@veteranssupport.org', 'placeholder-logo.png'),
+('Clean Energy Advocates', 'An organization educating communities about renewable energy and sustainable living practices.', 'contact@cleanenergy.org', 'placeholder-logo.png');
 
 -- ========================================
 -- Table: project
 -- ========================================
 CREATE TABLE project (
     project_id SERIAL PRIMARY KEY,
-    organization_id INTEGER NOT NULL REFERENCES organization(organization_id) ON DELETE CASCADE,
+    organization_id INTEGER NOT NULL,
     title VARCHAR(150) NOT NULL,
     description TEXT NOT NULL,
     location VARCHAR(255),
-    date DATE
+    date DATE,
+    CONSTRAINT fk_project_organization
+        FOREIGN KEY (organization_id) REFERENCES organization (organization_id) ON DELETE CASCADE
 );
 
 -- ========================================
@@ -177,9 +187,13 @@ VALUES
 -- Table: project_category (join table for many-to-many)
 -- ========================================
 CREATE TABLE project_category (
-    project_id INTEGER NOT NULL REFERENCES project(project_id) ON DELETE CASCADE,
-    category_id INTEGER NOT NULL REFERENCES category(category_id) ON DELETE CASCADE,
-    PRIMARY KEY (project_id, category_id)
+    project_id INTEGER NOT NULL,
+    category_id INTEGER NOT NULL,
+    PRIMARY KEY (project_id, category_id),
+    CONSTRAINT fk_project_category_project
+        FOREIGN KEY (project_id) REFERENCES project (project_id) ON DELETE CASCADE,
+    CONSTRAINT fk_project_category_category
+        FOREIGN KEY (category_id) REFERENCES category (category_id) ON DELETE CASCADE
 );
 
 -- ========================================

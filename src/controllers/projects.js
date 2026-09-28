@@ -1,9 +1,7 @@
 // Import any needed model functions
-import { getUpcomingProjects, getProjectDetails, getCategoriesByProjectId, createProject, updateProject } from '../models/projects.js';
+import { getAllProjects, getProjectDetails, getCategoriesByProjectId, createProject, updateProject } from '../models/projects.js';
 import { getAllOrganizations } from '../models/organizations.js';
 import { body, validationResult } from 'express-validator';
-
-const NUMBER_OF_UPCOMING_PROJECTS = 5;
 
 // Define validation and sanitization rules for the project form
 const projectValidation = [
@@ -29,8 +27,8 @@ const projectValidation = [
 
 // Define any controller functions
 const showProjectsPage = async (req, res) => {
-    const projects = await getUpcomingProjects(NUMBER_OF_UPCOMING_PROJECTS);
-    const title = 'Upcoming Service Projects';
+    const projects = await getAllProjects();
+    const title = 'Service Projects';
 
     res.render('projects', { title, projects });
 };

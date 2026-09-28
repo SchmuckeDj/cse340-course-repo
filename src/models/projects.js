@@ -2,7 +2,19 @@ import db from './db.js';
 
 const getAllProjects = async () => {
     try {
-        const query = 'SELECT * FROM project';
+        const query = `
+            SELECT
+                project.project_id,
+                project.title,
+                project.description,
+                project.date,
+                project.location,
+                project.organization_id,
+                organization.name AS organization_name
+            FROM project
+            JOIN organization ON project.organization_id = organization.organization_id
+            ORDER BY project.date;
+        `;
         const result = await db.query(query);
         return result.rows;
     } catch (error) {

@@ -1,6 +1,8 @@
 -- ========================================
 -- Reset: drop tables so this script can be re-run
 -- ========================================
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS roles CASCADE;
 DROP TABLE IF EXISTS project_category CASCADE;
 DROP TABLE IF EXISTS project CASCADE;
 DROP TABLE IF EXISTS category CASCADE;
@@ -310,3 +312,33 @@ VALUES
 ((SELECT project_id FROM project WHERE title = 'Renewable Energy Expo'), (SELECT category_id FROM category WHERE name = 'Technology')),
 ((SELECT project_id FROM project WHERE title = 'Energy Saving Tips Fair'), (SELECT category_id FROM category WHERE name = 'Environmental')),
 ((SELECT project_id FROM project WHERE title = 'Electric Vehicle Showcase'), (SELECT category_id FROM category WHERE name = 'Technology'));
+
+-- ========================================
+-- Table: roles
+-- ========================================
+CREATE TABLE roles (
+    role_id SERIAL PRIMARY KEY,
+    role_name VARCHAR(50) UNIQUE NOT NULL,
+    role_description TEXT
+);
+
+-- ========================================
+-- Insert initial roles
+-- ========================================
+INSERT INTO roles (role_name, role_description) VALUES
+    ('user', 'Standard user with basic access'),
+    ('admin', 'Administrator with full system access');
+
+-- ========================================
+-- Table: users
+-- ========================================
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role_id INTEGER,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_users_role
+        FOREIGN KEY (role_id) REFERENCES roles (role_id)
+);
